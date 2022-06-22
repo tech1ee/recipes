@@ -1,4 +1,4 @@
-package com.example.recipes
+package com.example.recipes.entity
 
 data class Measure(
     val amount: Double?,

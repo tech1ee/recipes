@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_view_default_corner_radius">16dp</dimen>
+    <dimen name="default_margin_small">8dp</dimen>
+    <dimen name="default_margin_medium">16dp</dimen>
+    <dimen name="default_margin_large">32dp</dimen>
+</resources>

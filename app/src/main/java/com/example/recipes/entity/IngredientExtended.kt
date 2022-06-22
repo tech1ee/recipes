@@ -1,4 +1,6 @@
-package com.example.recipes
+package com.example.recipes.entity
+
+import com.example.recipes.entity.Measure
 
 data class IngredientExtended(
     val aisle: String?,
