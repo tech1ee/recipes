@@ -1,5 +1,6 @@
 package com.example.recipes.data
 
+import com.example.recipes.entity.RandomRecipesResult
 import com.example.recipes.entity.RecipeInformation
 import com.example.recipes.entity.RecipesSearchResult
 import retrofit2.Response
@@ -15,7 +16,7 @@ interface RecipeApi {
         @Query("limitLicense") limitLicense: Boolean,
         @Query("tags") tags: List<String>,
         @Query("number") number: Int
-    ): Response<List<RecipeInformation>>
+    ): Response<RandomRecipesResult>
 
     @GET("recipes/complexSearch")
     fun searchRecipes(@QueryMap queryMap: HashMap<String, String>): Response<RecipesSearchResult>

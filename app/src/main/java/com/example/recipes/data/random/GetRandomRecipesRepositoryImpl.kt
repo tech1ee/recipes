@@ -19,7 +19,7 @@ class GetRandomRecipesRepositoryImpl(
             val result = api.getRandomRecipes(limitLicense, tags, number)
             val data = result.body()
 
-            if (result.isSuccessful && data != null) success(data)
+            if (result.isSuccessful && data != null) success(data.recipes)
             else fail(ResponseUnsuccessfulException())
         } catch (e: Exception) {
             fail(e)
