@@ -1,18 +1,29 @@
 package com.example.recipes.presentation.recipelist
 
-import android.text.Html
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.recipes.R
 import com.example.recipes.entity.RecipeInformation
 
-class RecipesAdapter(private val list: List<RecipeInformation>) :
-    RecyclerView.Adapter<RecipesAdapter.ViewHolder>() {
+class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder>() {
+
+    private val list = mutableListOf<RecipeInformation>()
+
+    var itemClickListener: ((recipe: RecipeInformation) -> Unit)? = null
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(list: List<RecipeInformation>) {
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesAdapter.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_recipe_list, parent, false))
@@ -35,7 +46,11 @@ class RecipesAdapter(private val list: List<RecipeInformation>) :
             Glide.with(image).load(item.image).into(image)
 
             title.text = item.title
-            summary.text = item.summary
+            item.summary?.let { txt ->
+                summary.text = HtmlCompat.fromHtml(txt, HtmlCompat.FROM_HTML_MODE_COMPACT)
+            }
+
+            itemView.setOnClickListener { itemClickListener?.invoke(item) }
         }
     }
 }

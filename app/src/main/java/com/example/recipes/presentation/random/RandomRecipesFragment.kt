@@ -43,7 +43,7 @@ class RandomRecipesFragment: BaseFragment<FragmentRandomRecipesBinding>() {
 
     private fun handleRecipeList(list: List<RecipeInformation>) {
         binding?.recipesRv?.layoutManager = LinearLayoutManager(requireContext())
-        binding?.recipesRv?.adapter = RecipesAdapter(list)
+        binding?.recipesRv?.adapter = RecipesAdapter().apply { setList(list) }
     }
 
     private fun handleProgress(inProgress: Boolean) {
