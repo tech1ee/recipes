@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.recipes.R
 import com.example.recipes.databinding.FragmentRandomRecipesBinding
 import com.example.recipes.entity.RecipeInformation
 import com.example.recipes.presentation.BaseFragment
@@ -20,9 +22,16 @@ class RandomRecipesFragment: BaseFragment<FragmentRandomRecipesBinding>() {
     private val viewModel by viewModels<RandomRecipesViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar()
         initView()
         observe()
         viewModel.getRandomRecipes()
+    }
+
+    private fun initToolbar() {
+        requireActivity().actionBar?.setBackgroundDrawable(
+            ContextCompat.getDrawable(requireContext(), R.drawable.toolbar_background)
+        )
     }
 
     private fun initView() {
@@ -43,7 +52,10 @@ class RandomRecipesFragment: BaseFragment<FragmentRandomRecipesBinding>() {
 
     private fun handleRecipeList(list: List<RecipeInformation>) {
         binding?.recipesRv?.layoutManager = LinearLayoutManager(requireContext())
-        binding?.recipesRv?.adapter = RecipesAdapter().apply { setList(list) }
+        binding?.recipesRv?.adapter = RecipesAdapter().apply {
+            setList(list)
+            itemClickListener = {  }
+        }
     }
 
     private fun handleProgress(inProgress: Boolean) {

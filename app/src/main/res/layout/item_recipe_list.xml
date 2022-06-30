@@ -23,20 +23,31 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"/>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="-16dp"
+                android:src="@color/black"
+                android:alpha=".5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/title"/>
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_margin_medium"
-                android:layout_marginTop="270dp"
                 android:layout_marginEnd="@dimen/default_margin_medium"
+                android:layout_marginBottom="@dimen/default_margin_small"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="@color/teal_200"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toTopOf="@id/summary"/>
 
             <TextView
                 android:id="@+id/summary"
@@ -45,11 +56,13 @@
                 android:layout_marginStart="@dimen/default_margin_medium"
                 android:layout_marginTop="@dimen/default_margin_small"
                 android:layout_marginEnd="@dimen/default_margin_medium"
+                android:layout_marginBottom="@dimen/default_margin_medium"
                 android:lines="2"
                 android:textStyle="italic"
+                android:textColor="@color/teal_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title" />
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
