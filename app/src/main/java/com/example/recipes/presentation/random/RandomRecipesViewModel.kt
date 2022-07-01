@@ -23,6 +23,10 @@ class RandomRecipesViewModel @Inject constructor(
     private val tags = mutableListOf<String>()
     private val number = 100
 
+    fun setup() {
+        if (stateLiveData.value?.recipes == null) getRandomRecipes()
+    }
+
     fun getRandomRecipes() {
         state(RandomRecipesState(loading = true))
         viewModelScope.launch(Dispatchers.IO) {

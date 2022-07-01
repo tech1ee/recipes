@@ -19,10 +19,10 @@ interface RecipeApi {
     ): Response<RandomRecipesResult>
 
     @GET("recipes/complexSearch")
-    fun searchRecipes(@QueryMap queryMap: HashMap<String, String>): Response<RecipesSearchResult>
+    suspend fun searchRecipes(@QueryMap queryMap: HashMap<String, String>): Response<RecipesSearchResult>
 
     @GET("recipes/{id}/information")
-    fun getRecipeInformation(
+    suspend fun getRecipeInformation(
         @Path("id") id: Long,
         @Query("includeNutrition") includeNutrition: Boolean
     ): Response<RecipeInformation>
