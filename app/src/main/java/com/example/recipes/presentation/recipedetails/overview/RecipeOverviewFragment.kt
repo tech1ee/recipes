@@ -1,4 +1,4 @@
-package com.example.recipes.presentation.recipedetails
+package com.example.recipes.presentation.recipedetails.overview
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,9 +14,9 @@ import com.example.recipes.presentation.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>() {
+class RecipeOverviewFragment : BaseFragment<FragmentRecipeDetailsBinding>() {
 
-    private val viewModel by viewModels<RecipeDetailsViewModel>()
+    private val viewModel by viewModels<RecipeOverviewViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,7 +66,7 @@ class RecipeDetailsFragment : BaseFragment<FragmentRecipeDetailsBinding>() {
         private const val EXTRA_ID = "EXTRA_ID"
         private const val EXTRA_INCLUDE_NUTRITION = "EXTRA_INCLUDE_NUTRITION"
 
-        fun newInstance(id: Long, includeNutrition: Boolean) = RecipeDetailsFragment().apply {
+        fun newInstance(id: Long, includeNutrition: Boolean) = RecipeOverviewFragment().apply {
             arguments = Bundle().apply {
                 putLong(EXTRA_ID, id)
                 putBoolean(EXTRA_INCLUDE_NUTRITION, includeNutrition)

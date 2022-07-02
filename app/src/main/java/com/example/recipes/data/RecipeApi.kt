@@ -1,5 +1,6 @@
 package com.example.recipes.data
 
+import com.example.recipes.entity.Ingredient
 import com.example.recipes.entity.RandomRecipesResult
 import com.example.recipes.entity.RecipeInformation
 import com.example.recipes.entity.RecipesSearchResult
@@ -26,4 +27,9 @@ interface RecipeApi {
         @Path("id") id: Long,
         @Query("includeNutrition") includeNutrition: Boolean
     ): Response<RecipeInformation>
+
+    @GET("recipes/{id}/ingredientWidget")
+    suspend fun getRecipeIngredients(
+        @Path("id") id: Long
+    ): Response<List<Ingredient>>
 }

@@ -1,6 +1,8 @@
 package com.example.recipes.di
 
 import com.example.recipes.data.RecipeApi
+import com.example.recipes.data.ingredients.GetRecipeIngredientsRepository
+import com.example.recipes.data.ingredients.GetRecipeIngredientsRepositoryImpl
 import com.example.recipes.data.random.GetRandomRecipesRepository
 import com.example.recipes.data.random.GetRandomRecipesRepositoryImpl
 import com.example.recipes.data.recipedetails.RecipeDetailsRepository
@@ -25,5 +27,11 @@ object RepositoryModule {
     @Provides
     fun provideRecipeDetailsRepository(api: RecipeApi): RecipeDetailsRepository {
         return RecipeDetailsRepositoryImpl(api)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetRecipeIngredientsRepository(api: RecipeApi): GetRecipeIngredientsRepository {
+        return GetRecipeIngredientsRepositoryImpl(api)
     }
 }
