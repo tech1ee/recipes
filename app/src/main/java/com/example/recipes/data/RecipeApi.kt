@@ -1,9 +1,6 @@
 package com.example.recipes.data
 
-import com.example.recipes.entity.Ingredient
-import com.example.recipes.entity.RandomRecipesResult
-import com.example.recipes.entity.RecipeInformation
-import com.example.recipes.entity.RecipesSearchResult
+import com.example.recipes.entity.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -28,8 +25,8 @@ interface RecipeApi {
         @Query("includeNutrition") includeNutrition: Boolean
     ): Response<RecipeInformation>
 
-    @GET("recipes/{id}/ingredientWidget")
+    @GET("recipes/{id}/ingredientWidget.json")
     suspend fun getRecipeIngredients(
         @Path("id") id: Long
-    ): Response<List<Ingredient>>
+    ): Response<RecipeIngredientsResult>
 }

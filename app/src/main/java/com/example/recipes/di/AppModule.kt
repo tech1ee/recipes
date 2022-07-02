@@ -22,7 +22,7 @@ object AppModule {
     fun provideRecipeApi(okHttpClient: OkHttpClient): RecipeApi {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.spoonacular.com")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create().asLenient())
             .client(okHttpClient)
             .build()
         return retrofit.create(RecipeApi::class.java)

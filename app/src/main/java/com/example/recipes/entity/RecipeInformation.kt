@@ -30,6 +30,5 @@ data class RecipeInformation(
     val weightWatcherSmartPoints: Int?,
     val dishTypes: List<String>?,
     val extendedIngredients: List<IngredientExtended>,
-    val summary: String?,
-    val winePairing: Map<String, List<String>>?
+    val summary: String?
 )

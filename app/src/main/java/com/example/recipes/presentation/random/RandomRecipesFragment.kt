@@ -12,7 +12,7 @@ import com.example.recipes.R
 import com.example.recipes.databinding.FragmentRandomRecipesBinding
 import com.example.recipes.entity.RecipeInformation
 import com.example.recipes.presentation.BaseFragment
-import com.example.recipes.presentation.recipedetails.overview.RecipeOverviewFragment
+import com.example.recipes.presentation.recipedetails.RecipeDetailsFragment
 import com.example.recipes.presentation.recipelist.RecipesAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,9 +57,7 @@ class RandomRecipesFragment: BaseFragment<FragmentRandomRecipesBinding>() {
             setList(list)
             itemClickListener = { recipe ->
                 recipe.id?.let { id ->
-                    openScreen(
-                        RecipeOverviewFragment.newInstance(id = id, includeNutrition = true)
-                    )
+                    openScreen(RecipeDetailsFragment.newInstance(id))
                 }
             }
         }

@@ -17,7 +17,7 @@ class GetRecipeIngredientsRepositoryImpl(
             val result = api.getRecipeIngredients(id)
             val data = result.body()
 
-            if (result.isSuccessful && data != null) success(data)
+            if (result.isSuccessful && data != null) success(data.ingredients)
             else fail(ResponseUnsuccessfulException())
         } catch (e: Exception) {
             fail(e)

@@ -8,38 +8,36 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.recipes.R
-import com.example.recipes.databinding.FragmentRecipeDetailsBinding
+import com.example.recipes.databinding.FragmentRecipeOverviewBinding
 import com.example.recipes.entity.RecipeInformation
 import com.example.recipes.presentation.BaseFragment
+import com.example.recipes.presentation.recipedetails.RecipeDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecipeOverviewFragment : BaseFragment<FragmentRecipeDetailsBinding>() {
+class RecipeOverviewFragment : BaseFragment<FragmentRecipeOverviewBinding>() {
 
-    private val viewModel by viewModels<RecipeOverviewViewModel>()
+    private val recipeDetailsViewModel by viewModels<RecipeDetailsViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
+    private val recipeOverviewViewModel by viewModels<RecipeOverviewViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         observe()
-
-        val id = arguments?.getLong(EXTRA_ID)
-        val includeNutrition = arguments?.getBoolean(EXTRA_INCLUDE_NUTRITION)
-        if (id != null && includeNutrition != null) viewModel.setup(id, includeNutrition)
-        else showAlert(
-            title = getString(R.string.error),
-            message = getString(R.string.couldnt_get_data)
-        ) { requireActivity().onBackPressed() }
     }
 
     private fun observe() {
-        viewModel.stateLiveData.observe(viewLifecycleOwner) { state ->
+        recipeDetailsViewModel.stateLiveData.observe(viewLifecycleOwner) { state ->
+            state.recipeId?.let { id ->
+                recipeOverviewViewModel.setup(id, true)
+            }
+        }
+        recipeOverviewViewModel.stateLiveData.observe(viewLifecycleOwner) { state ->
             progress(state.loading)
-            if (state.data != null) setData(state.data)
-            if (state.errorMessage != null) showAlert(
-                title = getString(R.string.error),
-                message = state.errorMessage
-            ) { requireActivity().onBackPressed() }
+            if (state.data != null) handleData(state.data)
+            if (state.errorMessage != null) handleError(state.errorMessage)
         }
     }
 
@@ -47,8 +45,10 @@ class RecipeOverviewFragment : BaseFragment<FragmentRecipeDetailsBinding>() {
         binding?.progressBar?.visibility = if (inProgress) View.VISIBLE else View.GONE
     }
 
-    private fun setData(data: RecipeInformation) {
-        binding?.toolbar?.title = data.title
+    private fun handleData(data: RecipeInformation) {
+        data.title?.let { title ->
+            recipeDetailsViewModel.setRecipeTitle(title)
+        }
         binding?.image?.let { imageView ->
             Glide.with(requireContext()).load(data.image).into(imageView)
         }
@@ -57,21 +57,14 @@ class RecipeOverviewFragment : BaseFragment<FragmentRecipeDetailsBinding>() {
         }
     }
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentRecipeDetailsBinding
-        get() = FragmentRecipeDetailsBinding::inflate
-
-
-    companion object {
-
-        private const val EXTRA_ID = "EXTRA_ID"
-        private const val EXTRA_INCLUDE_NUTRITION = "EXTRA_INCLUDE_NUTRITION"
-
-        fun newInstance(id: Long, includeNutrition: Boolean) = RecipeOverviewFragment().apply {
-            arguments = Bundle().apply {
-                putLong(EXTRA_ID, id)
-                putBoolean(EXTRA_INCLUDE_NUTRITION, includeNutrition)
-            }
-        }
+    private fun handleError(message: String) {
+        showAlert(
+            title = getString(R.string.error),
+            message = message
+        ) { requireActivity().onBackPressed() }
     }
+
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentRecipeOverviewBinding
+        get() = FragmentRecipeOverviewBinding::inflate
 
 }
